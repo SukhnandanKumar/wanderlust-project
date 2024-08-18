@@ -1,8 +1,7 @@
 if(process.env.NODE_ENV != "production"){
     require("dotenv").config();
 }
-// console.log(process.env)
-// console.log(process.env.SECRET)
+
 
 const express = require('express')
 const mongoose = require('mongoose')
@@ -24,7 +23,7 @@ const listingsRoute=require("./Routes/listing.js")
 const reviewRoute=require("./Routes/review.js")
 const userRoute=require('./Routes/user.js')
 
-// const mongo_url='mongodb://127.0.0.1:27017/wanderlust'
+
 
 const dbUrl=process.env.ATLASDB_URL;
 
@@ -35,7 +34,7 @@ main().then(()=>{
     console.log("if error accour",err)
 })
 async function main(){
-    // await mongoose.connect(mongo_url);
+     
     await mongoose.connect(dbUrl);
 }
 
@@ -70,11 +69,6 @@ const sessionOption={
     }
 }
 
- 
-
-// app.get("/",(req,res)=>{
-//     res.send("Hello I'm Root")
-// })
 
 app.use(session(sessionOption))
 app.use(flash())
@@ -111,7 +105,7 @@ app.all("*",(req,res,next)=>{
     next(new ExpressError(404,"Page Not Found!"));
 })
 
-//Error Handling Middleware
+
 app.use((err,req,res,next)=>{
     let{status=500,message}=err;
     res.status(status).send(message)
