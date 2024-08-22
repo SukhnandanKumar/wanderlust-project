@@ -2,6 +2,9 @@
   "engines": {
     "node": "20.10.0"
   },
+  "scripts": {
+    "start": "node src/app.js"
+  },
   "dependencies": {
     "cloudinary": "^2.4.0",
     "connect-flash": "^0.1.1",

@@ -6,7 +6,7 @@ if(process.env.NODE_ENV != "production"){
 const express = require('express')
 const mongoose = require('mongoose')
 const app = express()
-const port = 8080
+const port = 4400
 const path = require('path')
 const methodOverride = require('method-override')
 const ejsMate = require('ejs-mate')
@@ -24,7 +24,7 @@ const reviewRoute=require("./Routes/review.js")
 const userRoute=require('./Routes/user.js')
 
 
-
+// const mongo_url='mongodb://127.0.0.1:27017/wanderlust'
 const dbUrl=process.env.ATLASDB_URL;
 
 main().then(()=>{
@@ -34,7 +34,8 @@ main().then(()=>{
     console.log("if error accour",err)
 })
 async function main(){
-     
+    
+    // await mongoose.connect(mongo_url);
     await mongoose.connect(dbUrl);
 }
 
@@ -46,19 +47,19 @@ app.use(methodOverride("_method"));
 app.engine("ejs",ejsMate)
 app.use(express.static(path.join(__dirname,"public")))
 
-const store=MongoStore.create({
-    mongoUrl: dbUrl,
-    crypto: {
-        secret: process.env.SECRETS
-    },
-    touchAfter: 24 * 3600
-})
+// const store=MongoStore.create({
+//     mongoUrl: dbUrl,
+//     crypto: {
+//         secret: process.env.SECRETS
+//     },
+//     touchAfter: 24 * 3600
+// })
 
-store.on("eroor", ()=>{
-    console.log("ERROR in Mongo Store",err)
-})
+// store.on("eroor", ()=>{
+//     console.log("ERROR in Mongo Store",err)
+// })
 const sessionOption={
-    store,
+    // store,
     secret: process.env.SECRETS,
     resave: false,
     saveUninitialized: true,
