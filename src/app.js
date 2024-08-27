@@ -1,12 +1,12 @@
 if(process.env.NODE_ENV != "production"){
     require("dotenv").config();
 }
-
+ 
 
 const express = require('express')
 const mongoose = require('mongoose')
 const app = express()
-const port = 4400
+const port = 8080
 const path = require('path')
 const methodOverride = require('method-override')
 const ejsMate = require('ejs-mate')
@@ -47,19 +47,22 @@ app.use(methodOverride("_method"));
 app.engine("ejs",ejsMate)
 app.use(express.static(path.join(__dirname,"public")))
 
-// const store=MongoStore.create({
-//     mongoUrl: dbUrl,
-//     crypto: {
-//         secret: process.env.SECRETS
-//     },
-//     touchAfter: 24 * 3600
-// })
+console.log("Helllll",process.env.ATLASDB_URL)
+console.log("Helllllbbbb",process.env.SECRETS)
 
-// store.on("eroor", ()=>{
-//     console.log("ERROR in Mongo Store",err)
-// })
+const store=MongoStore.create({
+    mongoUrl: dbUrl,
+    crypto: {
+        secret: process.env.SECRETS
+    },
+    touchAfter: 24 * 3600
+})
+
+store.on("eroor", ()=>{
+    console.log("ERROR in Mongo Store",err)
+})
 const sessionOption={
-    // store,
+    store,
     secret: process.env.SECRETS,
     resave: false,
     saveUninitialized: true,
